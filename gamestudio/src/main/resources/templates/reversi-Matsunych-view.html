@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reversi-2</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="refresh" content="0.01"/>
+    <link rel="stylesheet" th:href="@{/css/stylesheet.css}"/>
+    <style>
+        body {
+            /*background: burlywood;*/
+            background: rgb(252,176,69);
+            background: linear-gradient(90deg, rgba(252,176,69,1) 15%, rgba(253,29,29,1) 78%, rgba(131,58,180,1) 100%);
+            color: #000000; /* Цвет текста */
+        }
+    </style>
+</head>
+<body >
+        <!--STYLE="background-color: #e0e0e0"-->
+
+
+<h1>Reversi-2</h1>
+<h2>Display ID: <span th:text="${displayId}"/></h2>
+
+
+<div th:if="${loggedUser1 == null && loggedUser2 == null}">
+    <div th:utext="${@reversiMatsunychController.printWinner()}"/>
+</div>
+<div style="text-align: center">
+    <div th:utext="${@reversiMatsunychController.DefinitionPlayer()}"/>
+</div>
+
+<br>
+<div th:if="${htmlField != null}">
+    <div th:utext="${htmlField}"></div>
+</div>
+
+
+
+
+
+<h2 style="text-align: center">Scores</h2>
+<div>
+
+    <br>
+
+    <table style="text-align: left;">
+        <tr th:each="score : ${score}">
+            <td>
+                <text th:text="${score.player}"/>
+
+            </td>
+            <td>
+                -
+                <text th:text="${score.points}"/>
+            </td>
+
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

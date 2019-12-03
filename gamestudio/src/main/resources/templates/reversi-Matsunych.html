@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="../static/css/stylesheet.css"/>
+    <meta charset="UTF-8">
+    <title>Reversi</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+        .blink {
+            animation: blink 1s infinite; /* Параметры анимации */
+        }
+
+        @keyframes blink {
+            from {
+                opacity: 1; /* Непрозрачный текст */
+            }
+            to {
+                opacity: 0; /* Прозрачный текст */
+            }
+        }
+
+        table {
+            margin: auto; /* Выравниваем таблицу по центру окна  */
+        }
+
+        body {
+            /*background: burlywood;*/
+            background: rgb(131,58,180);
+            background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 15%, rgba(252,176,69,1) 100%);
+            color: #000000; /* Цвет текста */
+        }
+    </style>
+</head>
+<!--style="background-image: url(Fon.jpg); background-repeat: no-repeat"-->
+<body style="text-align: center">
+<a th:href="@{/reversi-Matsunych/display/1}">Link to display 1</a><br/>
+<a th:href="@{/reversi-Matsunych/display/pair/1}">Connect to display 1</a><br/>
+<a th:href="@{/reversi-Matsunych/display/unpair}">Disconnect from display</a><br/>
+<div style="display: flex; justify-content: space-between;">
+    <h1>REVERSI</h1>
+
+
+    <div th:utext="${@reversiMatsunychController.DefinitionPlayer()}"/>
+    <div>
+        <div th:if="${loggedUser1 != null && loggedUser2 != null}">
+            You are logged as and you are Black <span th:text="${loggedUser1}"/>.
+            <br>
+            You are logged as and you are Red <span th:text="${loggedUser2}"/>.
+            <br>
+            <a th:href="@{/reversi-Matsunych/logout}">Logout</a>
+
+
+        </div>
+
+        <div th:if="${loggedUser1 == null && loggedUser2 == null}">
+            <form method="get" th:action="@{/reversi-Matsunych/login}">
+                Login1(Black): <input name="login1" type="text"/>
+                <!--<input type="submit" value="Login">-->
+                <br>
+                Login2(Red): <input name="login2" type="text"/>
+                <br>
+                <input type="submit" value="Login">
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:if="${loggedUser1 == null && loggedUser2 == null}">
+    <div th:utext="${@reversiMatsunychController.printWinner()}"/>
+</div>
+<div th:if="${loggedUser1 != null && loggedUser2 != null}">
+    <a th:href="@{/reversi-Matsunych/new}">New game</a><br/>
+</div>
+
+
+<div th:if="${loggedUser1 != null && loggedUser2 != null}">
+    <div th:utext="${@reversiMatsunychController.getHtmlField()}"/>
+    <div style="display: flex; justify-content: center">
+        <br>
+
+        <div th:utext="${@reversiMatsunychController.getPoints()}"/>
+    </div>
+</div>
+
+<h2>Scores</h2>
+<div>
+
+    <br>
+
+    <table style="text-align: left;">
+        <tr th:each="score : ${score}">
+            <td>
+                <text th:text="${score.player}"/>
+
+            </td>
+            <td>
+                -
+                <text th:text="${score.points}"/>
+            </td>
+
+        </tr>
+    </table>
+</div>
+<div th:if="${loggedUser1 != null && loggedUser2 != null}">
+    <div>
+        <form method="get" th:action="@{/reversi-Matsunych/comment}">
+            Comment 1: <textarea name="comment1" type="text"/>
+            Super hra
+            </textarea>
+            <br>
+            Comment 2: <textarea name="comment2" type="text"/>
+            Vyborne
+            </textarea>
+            <br>
+            <input type="submit" value="Comment">
+
+        </form>
+    </div>
+</div>
+
+<h2>Comments</h2>
+<div style="display : flex; justify-content: flex-start;">
+
+    <!--<br>-->
+
+    <table style="text-align: left;">
+        <tr th:each="comment : ${comment}">
+            <td>
+                <text th:text="${comment.player}"/>
+
+            </td>
+            <td>
+                -
+                <text th:text="${comment.comment}"/>
+            </td>
+
+        </tr>
+    </table>
+</div>
+
+<div th:utext="${@reversiMatsunychController.getRatingAVG()}"/>
+
+</div>
+
+
+<div th:if="${loggedUser1 != null && loggedUser2 != null}">
+    <h2>Rating</h2>
+    <form method="get" th:action="@{/reversi-Matsunych/setRating}">
+        <button name="rate" type="text" value="1"/>1</button>
+        <button name="rate" type="text" value="2"/>2</button>
+        <button name="rate" type="text" value="3"/>3</button>
+        <button name="rate" type="text" value="4"/>4</button>
+        <button name="rate" type="text" value="5"/>5</button>
+    </form>
+</div>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
